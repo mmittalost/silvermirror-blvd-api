@@ -1,8 +1,14 @@
+const crypto = require('crypto');
+
 async function fetchRequest(query){
+    const business_id = "37443150-db33-46a8-9910-ff7fe6429121";
+    const api_secret = "/DnItfA6pBK6r73fs3o4UunUut66S+P/vzEotEiVLfQ="
+    const api_key = "f3a28438-783f-4359-b0d6-d67313bd4e68"
+    const auth = generate_auth_header(business_id, api_secret, api_key)
     let headersList = {
         "Accept": "*/*",
-        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-        "Authorization": "Basic ZjNhMjg0MzgtNzgzZi00MzU5LWIwZDYtZDY3MzEzYmQ0ZTY4OlNlTHJSYXErTVdaSy83Y0xheFBhL1c0Njh3RFVtOGFVTFlCUWdUT1dITkE9Ymx2ZC1hZG1pbi12MTM3NDQzMTUwLWRiMzMtNDZhOC05OTEwLWZmN2ZlNjQyOTEyMTE2NzU5NTU4MzY=",
+        "User-Agent": "SilverMirror (https://www.silvermirror.com)",
+        "Authorization": `Basic ${auth}`,
         "Content-Type": "application/json" 
     }
 
@@ -21,6 +27,25 @@ async function fetchRequest(query){
     // res.json({response:response.data});
 }
 
+function generate_auth_header(business_id, api_secret, api_key) {
+  const prefix = 'blvd-admin-v1'
+  const timestamp = Math.floor(Date.now() / 1000)
+
+  const payload = `${prefix}${business_id}${timestamp}`
+  const raw_key = Buffer.from(api_secret, 'base64')
+  const signature = crypto
+    .createHmac('sha256', raw_key)
+    .update(payload, 'utf8')
+    .digest('base64')
+
+  const token = `${signature}${payload}`
+  const http_basic_payload = `${api_key}:${token}`
+  const http_basic_credentials = Buffer.from(http_basic_payload, 'utf8').toString('base64')
+
+  return http_basic_credentials
+}
+
+// Endpoints
 exports.getServices = async function (req, res) {
   var returnObj = {
     status: "error",
@@ -68,7 +93,7 @@ exports.getClientByEmail = async function (req, res) {
     };
 
     // const email = req.body.email;
-    const email = `["Dameon.Predovic@example.com"]`;
+    const email = `["himanshu.sharma@opensourcetechnologies.com"]`;
     const gql = {
         query: `{
             clients(first:1 emails: ${email}){
@@ -160,6 +185,7 @@ exports.createClient = async function (req, res) {
                     id
                     name
                     email
+                    mobilePhone
                 }
             }
         }`

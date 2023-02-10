@@ -74,8 +74,8 @@ app.use('/', basicRouter);
 
 // - - - - - - - - - - - - - - - - - server
 
-app.listen(8081, () => {
- console.log("ost Server running on port 8081");
+app.listen(50000, () => {
+ console.log("ost Server running on port 50000");
  //fetchOrUpdateToken();
 });
 

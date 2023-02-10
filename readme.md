@@ -17,6 +17,14 @@ or simply : node index.js ( development)
  4. Rebuild: pm2 stop 1, pm2 start 1
 
 ## FTP
+https://blvd.ostlive.com/
+
+ftp:
+
+User: himanshu@blvd.ostlive.com
+Pass: t-svaD@8y;i5
+Host: blvd.ostlive.com
+port: 21
 
 --------------------------------------------------------------------------------
 
