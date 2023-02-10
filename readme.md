@@ -66,3 +66,4 @@ https://silvermirror.ostlive.com/blvd/
 https://github.com/mmittalost/silver-mirror-phaseII.git
 
 ## Silver Mirror PhaseII api repo
+https://github.com/mmittalost/silvermirror-blvd-api.git
