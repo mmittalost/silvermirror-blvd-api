@@ -1,0 +1,28 @@
+{
+  "name": "silvermirror-api",
+  "version": "1.0.0",
+  "description": "consume boulevard graphql api",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "pm2 start app.js --watch",
+    "stop": "pm2 stop",
+    "list":"pm2 list",
+    "monit":"pm2 monit"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.13",
+    "node-cron": "^2.0.3",
+    "pm2": "^4.5.0",
+    "qs": "^6.9.4",
+    "update-dotenv": "^1.1.1"
+  }
+}
