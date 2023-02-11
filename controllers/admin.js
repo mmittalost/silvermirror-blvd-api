@@ -86,17 +86,12 @@ exports.getServices = async function (req, res) {
 };
 
 exports.getClientByEmail = async function (req, res) {
-    var returnObj = {
-      status: "error",
-      message: "Something went wrong",
-      data: -1,
-    };
 
-    // const email = req.body.email;
-    const email = `["himanshu.sharma@opensourcetechnologies.com"]`;
+    const emails = req.body.emails;
+    // const email = `["himanshu.sharma@opensourcetechnologies.com"]`;
     const gql = {
-        query: `{
-            clients(first:1 emails: ${email}){
+        query: `query clients($emails:[String!]){
+            clients(first:1 emails: $emails){
                 edges{
                     node{
                         id
@@ -107,7 +102,10 @@ exports.getClientByEmail = async function (req, res) {
                     }
                 }
             }
-        }`
+        }`,
+        variables:{
+            emails:emails
+        }
     }
   
     const response = await fetchRequest(gql);

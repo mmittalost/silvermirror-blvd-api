@@ -26,6 +26,12 @@ Pass: t-svaD@8y;i5
 Host: blvd.ostlive.com
 port: 21
 
+// API FTP
+user: sapi
+pass: Ka$s0=&&GogSYnP
+host: 3.222.220.15
+Port: 22
+
 --------------------------------------------------------------------------------
 
 ## Silvermirror New Design Pages Dt 01 Feb 23
