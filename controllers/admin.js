@@ -176,9 +176,10 @@ exports.getStaffByLocation = async function (req, res) {
 exports.createClient = async function (req, res) {
     // {email:"test@ost.com" firstName:"OSTTEST" lastName:"Hello"}
     const client = req.body.client;
+    console.log("EMAIL : ", client.email);
     const gql = {
-        query: `mutation{
-            createClient(input: ${client}){
+        query: `mutation createClient($input:CreateClientInput!){
+            createClient(input: $input){
                 client{
                     id
                     name
@@ -186,7 +187,15 @@ exports.createClient = async function (req, res) {
                     mobilePhone
                 }
             }
-        }`
+        }`,
+        variables:{
+            input:{
+                "email":client.email,
+                "firstName":client.firstName,
+                "lastName":client.lastName,
+                "mobilePhone":client.mobilePhone
+            }
+        }
     }
   
     try{

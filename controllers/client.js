@@ -274,6 +274,15 @@ exports.getCartDetail = async function (req, res) {
       cart(id:$id){
             id
             expiresAt
+            guests{
+              id
+              email
+              firstName
+              lastName
+              label
+              number
+              phoneNumber
+            }
             selectedItems{
               id
               price
@@ -283,6 +292,11 @@ exports.getCartDetail = async function (req, res) {
                 description
                 disabled
                 disabledDescription
+                listPriceRange{
+                  min
+                  max
+                  variable
+                }
               }
               item{
                 id
@@ -382,6 +396,60 @@ exports.addIteminCart = async function (req, res) {
         "itemGuestId":itemGuestId,
         "itemId":itemId,
         "itemStaffVariantId":itemStaffVariantId
+      }
+    }
+  }
+  const response = await fetchRequest(gql);
+
+  res.json(response);
+};
+
+exports.removeIteminCart = async function (req, res) {
+  const cartID = req.body.cartId;
+  const itemId = req.body.itemId;
+
+  const gql = {
+    query: `mutation removeCartSelectedItem($input:RemoveCartSelectedItemInput!){
+      removeCartSelectedItem(input:$input){
+        cart{
+          id
+          expiresAt
+          summary{
+            deposit
+            depositAmount
+            discountAmount
+            gratuityAmount
+            paymentMethodRequired
+            roundingAmount
+            subtotal
+            taxAmount
+            total
+          }
+          bookingQuestions{
+            id
+            key
+            label
+            required
+          }
+          clientInformation{
+            email
+            firstName
+            lastName
+            phoneNumber
+            externalId
+          }
+          location{
+            id
+            name
+            businessName
+          }
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "id":cartID,
+        "itemId":itemId
       }
     }
   }
@@ -606,3 +674,152 @@ exports.checkoutCart = async function (req, res) {
 
   res.json(response);
 }
+
+exports.addCartOffer = async function (req, res) {
+  const cartID = req.body.cartId;
+  const offerCode = req.body.offerCode;
+
+  const gql = {
+    query: `mutation addCartOffer($input:AddCartOfferInput!){
+      addCartOffer(input:$input){
+        offer{
+          applied
+          code
+          id
+          name
+        }
+        cart{
+          id
+          completedAt
+          expiresAt
+          summary{
+            deposit
+            depositAmount
+            discountAmount
+            gratuityAmount
+            paymentMethodRequired
+            roundingAmount
+            subtotal
+            taxAmount
+            total
+          }
+          bookingQuestions{
+            id
+            key
+            label
+            required
+          }
+          clientInformation{
+            email
+            firstName
+            lastName
+            phoneNumber
+            externalId
+          }
+          location{
+            id
+            name
+            businessName
+          }
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "id":cartID,
+        "offerCode":offerCode
+      }
+    }
+  }
+  const response = await fetchRequest(gql);
+
+  res.json(response);
+}
+
+exports.removeCartOffer = async function (req, res) {
+  const cartID = req.body.cartId;
+  const offerId = req.body.offerId;
+
+  const gql = {
+    query: `mutation removeCartOffer($input:RemoveCartOfferInput!){
+      removeCartOffer(input:$input){
+        cart{
+          id
+          completedAt
+          expiresAt
+          summary{
+            deposit
+            depositAmount
+            discountAmount
+            gratuityAmount
+            paymentMethodRequired
+            roundingAmount
+            subtotal
+            taxAmount
+            total
+          }
+          bookingQuestions{
+            id
+            key
+            label
+            required
+          }
+          clientInformation{
+            email
+            firstName
+            lastName
+            phoneNumber
+            externalId
+          }
+          location{
+            id
+            name
+            businessName
+          }
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "id":cartID,
+        "offerId":offerId
+      }
+    }
+  }
+  const response = await fetchRequest(gql);
+
+  res.json(response);
+}
+
+exports.createCartGuest = async function (req, res) {
+  const client = req.body.client;
+  const cartID = req.body.cartID;
+
+  const gql = {
+    query: `mutation createCartGuest($input:CreateCartGuestInput!){
+      createCartGuest(input:$input){
+        cart {
+          id
+          guests {
+            id
+            firstName
+            lastName
+            email
+          }
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "id": cartID,
+        "email":client.email,
+        "firstName":client.firstName,
+        "lastName":client.lastName,
+        "phoneNumber":client.mobilePhone
+    }
+    }
+  }
+  const response = await fetchRequest(gql);
+
+  res.json(response);
+};

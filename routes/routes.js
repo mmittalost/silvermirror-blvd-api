@@ -20,14 +20,18 @@ router.post('/get_cart_bookable_times', ClientCtrl.getCartBookableTimes);
 router.post('/create_cart', ClientCtrl.createCart);
 router.post('/get_cart_detail', ClientCtrl.getCartDetail);
 router.post('/add_item_in_cart', ClientCtrl.addIteminCart);
+router.post('/remove_item_in_cart', ClientCtrl.removeIteminCart);
 router.post('/get_service_staff_varients', ClientCtrl.getServiceStaffVarients);
 router.post('/reserve_cart_bookable_items', ClientCtrl.reserveCartBookableItems);
 router.post('/update_cart_client_info',ClientCtrl.updateCartClientInfo);
 router.post('/add_cart_card_payment_method',ClientCtrl.addCartCardPaymentMethod);
 router.post('/checkout_cart', ClientCtrl.checkoutCart);
+router.post('/add_cart_offer', ClientCtrl.addCartOffer);
+router.post('/remove_cart_offer', ClientCtrl.removeCartOffer);
+router.post('/get_service_staff_varients', ClientCtrl.getServiceStaffVarients);
+router.post('/create_cart_guest', ClientCtrl.createCartGuest);
 
 router.get('/get_business', ClientCtrl.getBusiness);
-router.post('/get_service_staff_varients', ClientCtrl.getServiceStaffVarients);
 
 
 // Test
