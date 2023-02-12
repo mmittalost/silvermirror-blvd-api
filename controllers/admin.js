@@ -1,9 +1,18 @@
 const crypto = require('crypto');
 
 async function fetchRequest(query){
+    // STAGING
     const business_id = "37443150-db33-46a8-9910-ff7fe6429121";
     const api_secret = "/DnItfA6pBK6r73fs3o4UunUut66S+P/vzEotEiVLfQ="
     const api_key = "f3a28438-783f-4359-b0d6-d67313bd4e68"
+    const url = "https://sandbox.joinblvd.com/api/2020-01/admin"
+
+    // PRODUCTION
+    // const api_key = "d6764d76-d884-4ab5-87c1-90befe969ef4";
+    // const business_id = "c869f2d0-d72f-4466-9da8-1a14398ed1af";
+    // const api_secret = "uyjdGShwGICFKbr8TtXiyM8B++nigR+i1XFJi6b1FT8=";
+    // const url = "https://dashboard.boulevard.io/api/2020-01/admin"
+
     const auth = generate_auth_header(business_id, api_secret, api_key)
     let headersList = {
         "Accept": "*/*",
@@ -15,7 +24,7 @@ async function fetchRequest(query){
     let bodyContent = JSON.stringify(query);
 
     let reqOptions = {
-        url: "https://sandbox.joinblvd.com/api/2020-01/admin",
+        url: url,
         method: "POST",
         headers: headersList,
         data: bodyContent,

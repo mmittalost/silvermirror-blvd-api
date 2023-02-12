@@ -30,8 +30,10 @@ router.post('/add_cart_offer', ClientCtrl.addCartOffer);
 router.post('/remove_cart_offer', ClientCtrl.removeCartOffer);
 router.post('/get_service_staff_varients', ClientCtrl.getServiceStaffVarients);
 router.post('/create_cart_guest', ClientCtrl.createCartGuest);
-
-router.get('/get_business', ClientCtrl.getBusiness);
+router.post('/remove_cart_guest', ClientCtrl.removeCartGuest);
+router.post('/add_service_options_in_cart', ClientCtrl.addServiceOptionsInCart);
+router.post('/get_client_by_id', ClientCtrl.getClientById);
+router.post('/get_business', ClientCtrl.getBusiness);
 
 
 // Test
