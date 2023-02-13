@@ -34,6 +34,7 @@ router.post('/remove_cart_guest', ClientCtrl.removeCartGuest);
 router.post('/add_service_options_in_cart', ClientCtrl.addServiceOptionsInCart);
 router.post('/get_client_by_id', ClientCtrl.getClientById);
 router.post('/get_business', ClientCtrl.getBusiness);
+router.post('/take_cart_ownership', ClientCtrl.takeCartOwnership);
 
 
 // Test

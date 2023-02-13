@@ -1007,3 +1007,128 @@ exports.getClientById = async function (req, res) {
 
   res.json(response);
 }
+
+exports.takeCartOwnership = async function (req, res) {
+  const client_id = req.body.clientId;
+  const cartId = req.body.cartId;
+
+
+  const gql = {
+    query: `mutation takeCartOwnership($input:TakeCartOwnershipInput!){
+      takeCartOwnership(input:$input){
+        cart{
+          availableCategories{
+            availableItems{
+              id
+              name
+              description
+              listPriceRange{
+                min
+                max
+                variable
+              }
+              ...on CartAvailableBookableItem {
+                listDurationRange {
+                    max
+                    min
+                    variable
+                }
+                optionGroups{
+                  id
+                  name
+                  options{
+                    id
+                    groupId
+                    name
+                  }
+                }
+              }
+            }
+          }
+          id
+          expiresAt
+          guests{
+            id
+            email
+            firstName
+            lastName
+            label
+            number
+            phoneNumber
+          }
+          selectedItems{
+            id
+            price
+            ...on CartBookableItem {
+              selectedOptions{
+                id
+                name
+                priceDelta
+                groupId
+                durationDelta
+                description
+              }
+            }
+            addons{
+              id
+              name
+              description
+              disabled
+              disabledDescription
+              listPriceRange{
+                min
+                max
+                variable
+              }
+            }
+            item{
+              id
+              name
+              description
+              disabled
+              disabledDescription
+            }
+          }
+          summary{
+            deposit
+            depositAmount
+            discountAmount
+            gratuityAmount
+            paymentMethodRequired
+            roundingAmount
+            subtotal
+            taxAmount
+            total
+          }
+          bookingQuestions{
+            id
+            key
+            label
+            required
+          }
+          clientInformation{
+            email
+            firstName
+            lastName
+            phoneNumber
+            externalId
+          }
+          location{
+            id
+            name
+            businessName
+          }
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "id":cartId
+      }
+    }
+  }
+  const response = await fetchRequest(gql, client_id);
+
+  res.json(response);
+}
+
