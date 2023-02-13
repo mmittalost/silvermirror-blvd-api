@@ -12,6 +12,9 @@ router.get('/get_locations', AdminCtrl.getLocations);
 router.post('/get_staff_by_location', AdminCtrl.getStaffByLocation);
 router.post('/createClient', AdminCtrl.createClient);
 router.post('/get_client_by_email', AdminCtrl.getClientByEmail);
+router.post('/rechedule_appointment', AdminCtrl.rescheduleAppointment);
+router.post('/appointment_reschedule_available_dates', AdminCtrl.appointmentRescheduleAvailableDates);
+router.post('/appointment_reschedule_available_times', AdminCtrl.appointmentRescheduleAvailableTimes);
 
 
 // Client

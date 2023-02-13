@@ -215,3 +215,87 @@ exports.createClient = async function (req, res) {
     }
 }
 
+exports.appointmentRescheduleAvailableDates = async function (req, res) {
+    const appointmentId = req.body.appointmentId;
+    const searchRangeLower = req.body.searchRangeLower;
+    const searchRangeUpper = req.body.searchRangeUpper;
+    const tz = req.body.timeZone;
+     
+    const gql = {
+      query: `mutation AppointmentRescheduleAvailableDates($input:AppointmentRescheduleAvailableDatesInput!){
+        AppointmentRescheduleAvailableDates(input:$input){
+            availableDates{
+                date
+            }
+        }
+      }`,
+      variables:{
+        input:{
+            "appointmentId":appointmentId,
+            "searchRangeLower":searchRangeLower,
+            "searchRangeUpper":searchRangeUpper,
+            "tz":tz
+        }
+      }
+    }
+    const response = await fetchRequest(gql);
+  
+    res.json(response);
+};
+
+exports.appointmentRescheduleAvailableTimes = async function (req, res) {
+    const appointmentId = req.body.appointmentId;
+    const date = req.body.date;
+    const tz = req.body.timeZone;
+    
+    const gql = {
+      query: `mutation appointmentRescheduleAvailableTimes($input:AppointmentRescheduleAvailableTimesInput!){
+        appointmentRescheduleAvailableTimes(input:$input){
+            availableTimes{
+                bookableTimeId
+                startTime
+            }
+        }
+      }`,
+      variables:{
+        input:{
+            "appointmentId":appointmentId,
+            "date":date,
+            "tz":tz
+        }
+      }
+    }
+    const response = await fetchRequest(gql);
+  
+    res.json(response);
+};
+
+exports.rescheduleAppointment = async function (req, res) {
+    // const client_id = req.body.clientId;
+    const appointmentId = req.body.appointmentId;
+    const bookableTimeId = req.body.bookableTimeId;
+    const sendNotification = true;
+  
+    const gql = {
+      query: `mutation appointmentReschedule($input:AppointmentRescheduleInput!){
+        appointmentReschedule(input:$input){
+            appointment{
+                id
+                startAt
+                endAt
+            }
+        }
+      }`,
+      variables:{
+        input:{
+          "appointmentId":appointmentId,
+          "bookableTimeId":bookableTimeId,
+          "sendNotification":sendNotification
+        }
+      }
+    }
+    const response = await fetchRequest(gql);
+  
+    res.json(response);
+}
+
