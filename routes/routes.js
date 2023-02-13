@@ -35,6 +35,8 @@ router.post('/add_service_options_in_cart', ClientCtrl.addServiceOptionsInCart);
 router.post('/get_client_by_id', ClientCtrl.getClientById);
 router.post('/get_business', ClientCtrl.getBusiness);
 router.post('/take_cart_ownership', ClientCtrl.takeCartOwnership);
+router.post('/update_client', ClientCtrl.updateClient);
+router.post('/my_appointments', ClientCtrl.myAppointments);
 
 
 // Test

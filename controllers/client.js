@@ -71,7 +71,7 @@ function generate_guest_auth_header(api_key) {
 }
 
 
-// Endpoints
+// BOOKING ENDPOINTS
 exports.getCartBookableDates = async function (req, res) {
   const cartID = req.body.cartID;
   const locationID = req.body.locationID;
@@ -1132,3 +1132,160 @@ exports.takeCartOwnership = async function (req, res) {
   res.json(response);
 }
 
+// DASHBOARD ENDPOINTS
+exports.updateClient = async function (req, res) {
+  const client_id = req.body.clientId;
+  const client = req.body.client;
+
+  const gql = {
+    query: `mutation updateClient($input:UpdateClientInput!){
+      updateClient(input:$input){
+        client{
+          id
+          firstName
+          lastName
+          name
+          pronoun
+          email
+          mobilePhone
+          updatedAt
+        }
+      }
+    }`,
+    variables:{
+      input:{
+        "email":client.email,
+        "firstName":client.firstName,
+        "lastName":client.lastName,
+        "mobilePhone":client.mobilePhone
+      }
+    }
+  }
+  const response = await fetchRequest(gql, client_id);
+
+  res.json(response);
+}
+
+exports.myAppointments = async function (req, res) {
+  const client_id = req.body.clientId;
+
+  const gql = {
+    query: `{
+      myAppointments(first:20 query:"cancelled=false"){
+        edges{
+          node{
+            appointmentServiceOptions{
+              appointmentServiceId
+              durationDelta
+              finishDurationDelta
+              id
+              postClientDurationDelta
+              postStaffDurationDelta
+              priceDelta
+              serviceOptionId
+            }
+            appointmentServices{
+              duration
+              endAt
+              price
+              service{
+                category{
+                  name
+                }
+                categoryId
+                description
+                externalId
+                id
+                name
+              }
+              serviceId
+              staff{
+                avatar
+                bio
+                displayName
+                firstName
+                id
+                lastName
+                nickname
+                role{
+                  id
+                  name
+                }
+              }
+              staffId
+              staffRequested
+              startAt
+              startTimeOffset
+              totalDuration
+            }
+            calendarLinks{
+              googleCalendar
+              icsDownload
+              microsoftOffice
+              microsoftOutlook
+              yahooCalendar
+            }
+            cancellable
+            cancelled
+            client{
+              id
+              email
+              firstName
+              lastName
+              mobilePhone
+              pronoun
+            }
+            clientId
+            creditCards{
+              brand
+              expMonth
+              expYear
+              last4
+            }
+            duration
+            endAt
+            id
+            location{
+              address{
+                city
+                country
+                line1
+                line2
+                province
+                state
+                zip
+              }
+              arrivalInstructions
+              avatar
+              businessName
+              coordinates
+              id
+              name
+              phoneNumber
+              website
+              contactEmail
+              social{
+                facebook
+                google
+                instagram
+                pinterest
+                twitter
+                yelp
+                youtube
+              }
+              tz
+            }
+            locationId
+            notes
+            reschedulable
+            startAt
+            state
+          }
+        }
+      }
+    }`
+  }
+  const response = await fetchRequest(gql, client_id);
+
+  res.json(response);
+}
