@@ -1289,3 +1289,28 @@ exports.myAppointments = async function (req, res) {
 
   res.json(response);
 }
+
+exports.cancelAppointment = async function (req, res) {
+  const client_id = req.body.clientId;
+  const appointmentId = req.body.appointmentId;
+  const notes = req.body.notes;
+
+  const gql = {
+    query: `mutation cancelAppointment($input:CancelAppointmentInput!){
+      appointment{
+        id
+        cancelled
+        notes
+      }
+    }`,
+    variables:{
+      input:{
+        "id":appointmentId,
+        "notes":notes
+      }
+    }
+  }
+  const response = await fetchRequest(gql, client_id);
+
+  res.json(response);
+}
