@@ -303,6 +303,7 @@ exports.getCartDetail = async function (req, res) {
                 id
                 name
                 description
+                listPrice
                 listPriceRange{
                   min
                   max
