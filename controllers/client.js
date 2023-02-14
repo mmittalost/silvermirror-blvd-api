@@ -2,19 +2,19 @@ const crypto = require('crypto');
 
 async function fetchRequest(query, client_id){
     //STAGING
-    const API_KEY = "f3a28438-783f-4359-b0d6-d67313bd4e68";
-    const BUSINESS_ID = "37443150-db33-46a8-9910-ff7fe6429121";
-    const CLIENT_ID = client_id;
-    // const CLIENT_ID = "40d23c8e-b7bf-4ce3-8e3a-f08ea97dfee4";
-    const SECRET_KEY = "/DnItfA6pBK6r73fs3o4UunUut66S+P/vzEotEiVLfQ=";
-    const url = `https://sandbox.joinblvd.com/api/2020-01/${BUSINESS_ID}/client`;
+    // const API_KEY = "f3a28438-783f-4359-b0d6-d67313bd4e68";
+    // const BUSINESS_ID = "37443150-db33-46a8-9910-ff7fe6429121";
+    // const CLIENT_ID = client_id;
+    // // const CLIENT_ID = "40d23c8e-b7bf-4ce3-8e3a-f08ea97dfee4";
+    // const SECRET_KEY = "/DnItfA6pBK6r73fs3o4UunUut66S+P/vzEotEiVLfQ=";
+    // const url = `https://sandbox.joinblvd.com/api/2020-01/${BUSINESS_ID}/client`;
 
     //LIVE
-    // const API_KEY = "d6764d76-d884-4ab5-87c1-90befe969ef4";
-    // const BUSINESS_ID = "c869f2d0-d72f-4466-9da8-1a14398ed1af";
-    // const CLIENT_ID = client_id;
-    // const SECRET_KEY = "uyjdGShwGICFKbr8TtXiyM8B++nigR+i1XFJi6b1FT8=";
-    // const url = `https://dashboard.boulevard.io/api/2020-01/${BUSINESS_ID}/client`;
+    const API_KEY = "d6764d76-d884-4ab5-87c1-90befe969ef4";
+    const BUSINESS_ID = "c869f2d0-d72f-4466-9da8-1a14398ed1af";
+    const CLIENT_ID = client_id;
+    const SECRET_KEY = "uyjdGShwGICFKbr8TtXiyM8B++nigR+i1XFJi6b1FT8=";
+    const url = `https://dashboard.boulevard.io/api/2020-01/${BUSINESS_ID}/client`;
     
     let auth;
     if(CLIENT_ID){
@@ -297,6 +297,8 @@ exports.getCartDetail = async function (req, res) {
     query: `query cart($id:ID!){
       cart(id:$id){
             availableCategories{
+              id
+              name
               availableItems{
                 id
                 name
@@ -358,6 +360,20 @@ exports.getCartDetail = async function (req, res) {
                   min
                   max
                   variable
+                }
+                ...on CartAvailableBookableItem{
+                  optionGroups{
+                    id
+                    name
+                    description
+                    options{
+                      id
+                      name
+                      description
+                      durationDelta
+                      priceDelta
+                    }
+                  }
                 }
               }
               item{
