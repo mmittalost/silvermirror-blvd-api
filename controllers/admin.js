@@ -1,5 +1,19 @@
 const crypto = require('crypto');
 
+const emailTemplate = `<html>
+<body>
+    <h1>Hello Manish,</h1>
+    <p>Use the code below to authenticate:</p>
+    <div>
+        <p>990937</p>
+    </div>
+    <p>Please be aware that this code is temporary and will expire soon.</p>
+    <p>You are receiving this code because a login to your account was attempted on the Booking Portal.</p>
+    <p>Regards</p>
+    <p>The Silvermirror Team</p>
+</body>
+</html>`
+
 async function fetchRequest(query){
     // STAGING
     // const business_id = "37443150-db33-46a8-9910-ff7fe6429121";
@@ -54,13 +68,9 @@ function generate_auth_header(business_id, api_secret, api_key) {
   return http_basic_credentials
 }
 
+
 // Endpoints
 exports.getServices = async function (req, res) {
-  var returnObj = {
-    status: "error",
-    message: "Something went wrong",
-    data: -1,
-  };
 
   const gql = {
     query: `{
@@ -72,6 +82,7 @@ exports.getServices = async function (req, res) {
                   id 
                   name 
                   description
+                  active
                   serviceOptionGroups{
                       name
                       description
@@ -299,3 +310,39 @@ exports.rescheduleAppointment = async function (req, res) {
     res.json(response);
 }
 
+// exports.updateClient = async function (req, res) {
+//     // {email:"test@ost.com" firstName:"OSTTEST" lastName:"Hello"}
+//     const client = req.body.client;
+//     const clientId = req.body.client_id;
+//     const gql = {
+//         query: `mutation updateClient($input:UpdateClientInput!){
+//             updateClient(input: $input){
+//                 client{
+//                     id
+//                     name
+//                     email
+//                     mobilePhone
+//                 }
+//             }
+//         }`,
+//         variables:{
+//             input:{
+//                 "id":clientId,
+//                 "email":client.email,
+//                 "firstName":client.firstName,
+//                 "lastName":client.lastName,
+//                 "mobilePhone":client.mobilePhone,
+//                 "customFields":{
+//                     "key":"key"
+//                 }
+//             }
+//         }
+//     }
+  
+//     try{
+//         const response = await fetchRequest(gql);
+//         res.json(response);
+//     }catch(err){
+//         res.json(err);
+//     }
+// }

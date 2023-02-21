@@ -32,6 +32,12 @@ pass: Ka$s0=&&GogSYnP
 host: 3.222.220.15
 Port: 22
 
+// Frontend FTP
+user: booking
+pass: a5p8$asdHNJp$YrN
+Host: 3.222.220.15
+port: 22
+
 ## Production 
 https://dashboard.boulevard.io/manage/services
 mmittal@opensourcetechnologies.com
@@ -77,6 +83,7 @@ https://docs.google.com/spreadsheets/d/1J_U3itoGwpMX1CGRYaYDvmCANeX_1dKY/edit?pl
 ## Client Discussion
 - Answers from client: https://docs.google.com/document/d/1ysprgv_lnrIvyYc4pRbo1azkIuBUhYj0/edit
 - API discussion: https://docs.google.com/document/d/1VXU6r0dtazXBKMsFojJv0HRxsknZ3Wu_/edit
+- Client Discussion: https://docs.google.com/document/d/10ffIrHiygd1C2EraACDg7hp4w2nK-zyi/edit
 
 ## Silver mirror V1 app
 https://silvermirror.ostlive.com/blvd/

@@ -1,8 +1,7 @@
 // - - - - - - - - - - - - - - - - dependencies
  express = require("express");
  app = express();
- axios = require("axios");
- moment = require('moment');  
+ axios = require("axios"); 
  dtformat = "YYYY-MM-DD";
  require('dotenv').config();
  qs = require('qs');
@@ -10,6 +9,7 @@
  cors = require('cors');
  helmet = require('helmet');
  fs = require('fs');
+ const path = require("path") 
 
 var basicRouter = require('./routes/routes');
 // var TokenCtrl = require('./controllers/token');
@@ -24,6 +24,7 @@ app.use(express.urlencoded({extended: true}));
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
+app.use('/assets', express.static(path.join(__dirname, 'uploads')))
 
 /*app.use(cors({
   origin: function (origin, callback) {
@@ -35,9 +36,6 @@ app.use(express.json());
     'http://127.0.0.1:4000',
 		'http://localhost:4000', 
 		'http://localhost:4200', 
-    'https://www.caveday.org/',
-    'https://www.cavework.org',
-    'https://www.caveday.org/',
     ].indexOf(origin) !== -1) {
       callback(null, true)
     } else {

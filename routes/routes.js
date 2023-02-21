@@ -4,6 +4,7 @@
 
 var AdminCtrl = require('../controllers/admin');
 var ClientCtrl = require('../controllers/client');
+var FileUploadCtrl = require('../controllers/file-upload');
 
 // Admin
 router.get('/get_services', AdminCtrl.getServices);
@@ -15,9 +16,10 @@ router.post('/get_client_by_email', AdminCtrl.getClientByEmail);
 router.post('/rechedule_appointment', AdminCtrl.rescheduleAppointment);
 router.post('/appointment_reschedule_available_dates', AdminCtrl.appointmentRescheduleAvailableDates);
 router.post('/appointment_reschedule_available_times', AdminCtrl.appointmentRescheduleAvailableTimes);
-
+// router.post('/update_client', AdminCtrl.updateClient);
 
 // Client
+router.post('/login', ClientCtrl.login);
 router.post('/get_cart_bookable_dates', ClientCtrl.getCartBookableDates);
 router.post('/get_cart_bookable_times', ClientCtrl.getCartBookableTimes);
 router.post('/create_cart', ClientCtrl.createCart);
@@ -41,6 +43,16 @@ router.post('/take_cart_ownership', ClientCtrl.takeCartOwnership);
 router.post('/update_client', ClientCtrl.updateClient);
 router.post('/my_appointments', ClientCtrl.myAppointments);
 router.post('/cancel_appointment', ClientCtrl.cancelAppointment);
+router.post('/cart_clear', ClientCtrl.cartClear);
+router.post('/my_memberships', ClientCtrl.myMemberships);
+router.post('/add_product_in_cart', ClientCtrl.addProductinCart);
+router.post('/select_cart_payment_method', ClientCtrl.selectCartPaymentMethod);
+router.post('/get_cart_staff_variants', ClientCtrl.getCartStaffVariants);
+router.post('/update_item_in_cart', ClientCtrl.updateIteminCart);
+
+
+// FILE UPLOAD
+router.post('/upload_file', FileUploadCtrl.uploadFile);
 
 
 // Test
