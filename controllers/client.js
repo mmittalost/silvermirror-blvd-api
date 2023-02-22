@@ -476,6 +476,7 @@ exports.getCartDetail = async function (req, res) {
               }
             }
             id
+            clientMessage
             expiresAt
             guests{
               id
@@ -490,6 +491,15 @@ exports.getCartDetail = async function (req, res) {
               id
               price
               ...on CartBookableItem {
+                selectedStaffVariant{
+                  duration
+                  id
+                  price
+                  staff{
+                    id
+                    displayName
+                  }
+                }
                 guest{
                   email
                   firstName
@@ -1061,13 +1071,15 @@ exports.reserveCartBookableItems = async function (req, res) {
 exports.updateCartClientInfo = async function (req, res) {
   const cartID = req.body.cartId;
   const clientInfo = req.body.clientInfo;
+  const clientNote = req.body.clientNote;
   const client_id = req.body.clientId;
 
   const gql = {
-    query: `mutation updateCart($input:AddCartSelectedBookableItemInput!){
+    query: `mutation updateCart($input:UpdateCartInput!){
       updateCart(input:$input){
         cart{
           id
+          clientMessage
           expiresAt
           summary{
             deposit
@@ -1104,7 +1116,8 @@ exports.updateCartClientInfo = async function (req, res) {
     variables:{
       input:{
         "id":cartID,
-        "clientInformation":clientInfo
+        "clientInformation":clientInfo,
+        "clientMessage":clientNote
       }
     }
   }
