@@ -42,6 +42,7 @@ router.post('/get_business', ClientCtrl.getBusiness);
 router.post('/take_cart_ownership', ClientCtrl.takeCartOwnership);
 router.post('/update_client', ClientCtrl.updateClient);
 router.post('/my_appointments', ClientCtrl.myAppointments);
+router.post('/appointment_detail', ClientCtrl.appointmentDetail);
 router.post('/cancel_appointment', ClientCtrl.cancelAppointment);
 router.post('/cart_clear', ClientCtrl.cartClear);
 router.post('/my_memberships', ClientCtrl.myMemberships);

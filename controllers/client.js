@@ -489,6 +489,7 @@ exports.getCartDetail = async function (req, res) {
             }
             selectedItems{
               id
+              lineTotal
               price
               ...on CartBookableItem {
                 selectedStaffVariant{
@@ -1210,6 +1211,11 @@ exports.checkoutCart = async function (req, res) {
   const gql = {
     query: `mutation checkoutCart($input:CheckoutCartInput!){
       checkoutCart(input:$input){
+        appointments{
+          appointmentId
+          clientId
+          forCartOwner
+        }
         cart{
           id
           completedAt
@@ -1842,6 +1848,101 @@ exports.myAppointments = async function (req, res) {
         }
       }
     }`
+  }
+  const response = await fetchRequest(gql, client_id);
+
+  res.json(response);
+}
+
+exports.appointmentDetail = async function (req, res) {
+  const client_id = req.body.clientId;
+  const cartId = req.body.cartId;
+  const appointmentId = req.body.appointmentId;
+
+  const gql = {
+    query: `query($cartId:ID, $appointmentId:ID!) {
+      appointment(cartId:$cartId id:$appointmentId){
+        startAt
+        appointmentServiceOptions{
+          appointmentServiceId
+          durationDelta
+          finishDurationDelta
+          id
+          postClientDurationDelta
+          postStaffDurationDelta
+          priceDelta
+          serviceOptionId
+        }
+        appointmentServices{
+          duration
+          endAt
+          price
+          service{
+            category{
+              name
+            }
+            categoryId
+            description
+            id
+            name
+          }
+          serviceId
+          staff{
+            id
+            displayName
+          }
+          staffId
+          staffRequested
+          startAt
+          startTimeOffset
+          totalDuration
+        }
+        calendarLinks{
+          googleCalendar
+          icsDownload
+          microsoftOffice
+          microsoftOutlook
+          yahooCalendar
+        }
+        cancellable
+        cancelled
+        clientId
+        createdAt
+        creditCards{
+          brand
+          expMonth
+          expYear
+          last4
+        }
+        duration
+        endAt
+        id
+        location{
+          address{
+            city
+            country
+            line1
+            line2
+            province
+            state
+            zip
+          }
+          arrivalInstructions
+          avatar
+          businessName
+          name
+          phoneNumber
+          website
+          contactEmail
+          tz
+          updatedAt
+        }
+      }
+    }`,
+    variables:{
+      "cartId":cartId,
+      "appointmentId":appointmentId
+    }
   }
   const response = await fetchRequest(gql, client_id);
 
