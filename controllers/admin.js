@@ -197,6 +197,7 @@ exports.getStaffByLocation = async function (req, res) {
 exports.createClient = async function (req, res) {
     // {email:"test@ost.com" firstName:"OSTTEST" lastName:"Hello"}
     const client = req.body.client;
+    const joinEmail = req.body.joinEmail;
     console.log("EMAIL : ", client.email);
     const gql = {
         query: `mutation createClient($input:CreateClientInput!){
@@ -221,7 +222,10 @@ exports.createClient = async function (req, res) {
   
     try{
         const response = await fetchRequest(gql);
-        addMemberToMailchimpList(client.email);
+        if(joinEmail){
+            addMemberToMailchimpList(client.email)
+        }
+        res.send(mailchimpResponse);
         res.json(response);
     }catch(err){
         res.json(err);
@@ -351,7 +355,7 @@ exports.rescheduleAppointment = async function (req, res) {
 
 addMemberToMailchimpList = async(email)=>{
     mailchimpClient.setConfig({
-        apiKey: "a37d367bd166bd6d18e0c1f63bece341-us12",
+        apiKey: "a8bc2ca29576dada89cbd753224d01a7-us12",
         server: "us12",
       });
     const listId = '7f251dccc0';
