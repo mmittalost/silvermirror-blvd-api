@@ -38,6 +38,12 @@ pass: a5p8$asdHNJp$YrN
 Host: 3.222.220.15
 port: 22
 
+Fronted auth details:
+
+URL: https://bookings.silvermirror.com/assetsManager
+User: AuthBooking
+Pass: AJp2tR&5SFm^%541
+
 ## Production 
 https://dashboard.boulevard.io/manage/services
 mmittal@opensourcetechnologies.com

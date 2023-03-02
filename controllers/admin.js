@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const mailchimpClient = require("@mailchimp/mailchimp_marketing");
 
 const emailTemplate = `<html>
 <body>
@@ -220,6 +221,7 @@ exports.createClient = async function (req, res) {
   
     try{
         const response = await fetchRequest(gql);
+        addMemberToMailchimpList(client.email);
         res.json(response);
     }catch(err){
         res.json(err);
@@ -346,3 +348,15 @@ exports.rescheduleAppointment = async function (req, res) {
 //         res.json(err);
 //     }
 // }
+
+addMemberToMailchimpList = async(email)=>{
+    mailchimpClient.setConfig({
+        apiKey: "a37d367bd166bd6d18e0c1f63bece341-us12",
+        server: "us12",
+      });
+    const listId = '7f251dccc0';
+    const response = await mailchimpClient.lists.addListMember(listId, {
+        email_address: email,
+        status: "subscribed",
+    });
+}
