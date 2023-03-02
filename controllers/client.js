@@ -135,7 +135,7 @@ sendEmail = async function (email, otp, name) {
     secure: false, // true for 465, false for other ports
     auth: {
       user: "testing@opensourcetechnologies.com", // generated ethereal user
-      pass: "fTEaTpjZXkmf", // generated ethereal password
+      pass: "kckvWL(h3YLk", // old password "fTEaTpjZXkmf", // generated ethereal password
     },
       tls: {
           rejectUnauthorized: false
@@ -167,7 +167,7 @@ exports.login = async function (req, res){
   if(mailSentResponse.messageId){
     res.json({success: true, message:"OTP Sent successfully!"});
   }else{
-    res.json({success:false, message:"Something went wrong!"})
+    res.json({success:false, message:"Something went wrong!", error: mailSentResponse})
   }
   // }catch(err){
   //   res.json({success:false, error:err})
@@ -183,6 +183,8 @@ exports.getCartBookableDates = async function (req, res) {
   const tz = req.body.timeZone;
   const limit = req.body.limit;
   const client_id = req.body.clientId;
+  const searchRangeLower = req.body.searchRangeLower;
+  const searchRangeUpper = req.body.searchRangeUpper;
 
   var returnObj = {
     status: "error",
@@ -191,8 +193,8 @@ exports.getCartBookableDates = async function (req, res) {
   };
   // id: "urn:blvd:Cart:bf72d783-2f95-4e73-b5e7-f405d154546a" locationId:"urn:blvd:Location:0d3803fd-52aa-4d65-9828-78613f9f73f0" limit: 8
   const gql = {
-    query: `query cartBookableDates($id:ID!, $locationId:ID, $limit:Int, $tz:Tz){
-      cartBookableDates(id:$id  locationId:$locationId limit: $limit, tz:$tz){
+    query: `query cartBookableDates($id:ID!, $locationId:ID, $limit:Int, $tz:Tz, $searchRangeLower:Date, $searchRangeUpper:Date){
+      cartBookableDates(id:$id  locationId:$locationId limit: $limit, tz:$tz, searchRangeLower:$searchRangeLower, searchRangeUpper:$searchRangeUpper){
           date
       }
     }`,
@@ -200,7 +202,9 @@ exports.getCartBookableDates = async function (req, res) {
       id:cartID,
       locationID:locationID,
       limit:limit,
-      tz:tz
+      tz:tz,
+      searchRangeLower:searchRangeLower,
+      searchRangeUpper:searchRangeUpper
     }
   }
   const response = await fetchRequest(gql, client_id);
@@ -478,6 +482,8 @@ exports.getCartDetail = async function (req, res) {
             id
             clientMessage
             expiresAt
+            startTime
+            startTimeId
             guests{
               id
               email
@@ -491,6 +497,20 @@ exports.getCartDetail = async function (req, res) {
               id
               lineTotal
               price
+              selectedPaymentMethod{
+                id
+                name
+                ...on CartItemCardPaymentMethod{
+                  cardBrand
+                  cardExpMonth
+                  cardExpYear
+                  cardHolder
+                  cardIsDefault
+                  cardLast4
+                  id
+                  name
+                }
+              }
               ...on CartBookableItem {
                 selectedStaffVariant{
                   duration
@@ -573,6 +593,12 @@ exports.getCartDetail = async function (req, res) {
                 id
                 name
               }
+            }
+            offers{
+              applied
+              code
+              id
+              name
             }
             summary{
               deposit
@@ -1217,9 +1243,167 @@ exports.checkoutCart = async function (req, res) {
           forCartOwner
         }
         cart{
+          availableCategories{
+            id
+            name
+            availableItems{
+              id
+              name
+              description
+              listPrice
+              listPriceRange{
+                min
+                max
+                variable
+              }
+              ...on CartAvailableBookableItem {
+                listDurationRange {
+                    max
+                    min
+                    variable
+                }
+                optionGroups{
+                  id
+                  name
+                  options{
+                    id
+                    groupId
+                    name
+                  }
+                }
+                staffVariants{
+                  duration
+                  id
+                  price
+                  staff{
+                    id
+                    displayName
+                  }
+                }
+              }
+            }
+          }
           id
-          completedAt
+          clientMessage
           expiresAt
+          startTime
+          startTimeId
+          guests{
+            id
+            email
+            firstName
+            lastName
+            label
+            number
+            phoneNumber
+          }
+          selectedItems{
+            id
+            lineTotal
+            price
+            selectedPaymentMethod{
+              id
+              name
+              ...on CartItemCardPaymentMethod{
+                cardBrand
+                cardExpMonth
+                cardExpYear
+                cardHolder
+                cardIsDefault
+                cardLast4
+                id
+                name
+              }
+            }
+            ...on CartBookableItem {
+              selectedStaffVariant{
+                duration
+                id
+                price
+                staff{
+                  id
+                  displayName
+                }
+              }
+              guest{
+                email
+                firstName
+                id
+                label
+                lastName
+                number
+                phoneNumber
+              }
+              guestId
+              selectedOptions{
+                id
+                name
+                priceDelta
+                groupId
+                durationDelta
+                description
+              }
+            }
+            addons{
+              id
+              name
+              description
+              disabled
+              disabledDescription
+              listPriceRange{
+                min
+                max
+                variable
+              }
+              ...on CartAvailableBookableItem{
+                optionGroups{
+                  id
+                  name
+                  description
+                  options{
+                    id
+                    name
+                    description
+                    durationDelta
+                    priceDelta
+                  }
+                }
+              }
+            }
+            item{
+              id
+              name
+              description
+              disabled
+              disabledDescription
+            }
+          }
+          availablePaymentMethods{
+            id
+            name
+            ...on CartItemCardPaymentMethod{
+              cardBrand
+              cardExpMonth
+              cardExpYear
+              cardHolder
+              cardIsDefault
+              cardLast4
+              id
+              name
+            }
+            ...on CartItemVoucherPaymentMethod{
+              availableCount
+              expiresOn
+              id
+              name
+            }
+          }
+          offers{
+            applied
+            code
+            id
+            name
+          }
           summary{
             deposit
             depositAmount
@@ -1245,9 +1429,34 @@ exports.checkoutCart = async function (req, res) {
             externalId
           }
           location{
+            address{
+              city
+              country
+              line1
+              line2
+              province
+              state
+              zip
+            }
+            arrivalInstructions
+            avatar
+            businessName
+            coordinates
             id
             name
-            businessName
+            phoneNumber
+            website
+            contactEmail
+            social{
+              facebook
+              google
+              instagram
+              pinterest
+              twitter
+              yelp
+              youtube
+            }
+            tz
           }
         }
       }
