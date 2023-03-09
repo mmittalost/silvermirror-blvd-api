@@ -77,54 +77,53 @@ sendEmail = async function (email, otp, name) {
   const emailTemplate = `<html>
   <body>
   
-  <table style="border-collapse:collapse!important" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#fafafa">
-   <tbody>
-     <tr>
-       <td valign="top" align="center">
-       
-         <table style="margin:50px 0; color:#000; font-size:12px; font-family: sans-serif; line-height: 1.6rem; border-collapse:collapse!important" valign="top" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#fff">
-           <tbody>
-             <tr>
-               <td valign="top" width="50" align="center"></td>
-               <td valign="middle" height="150" align="center">
-                 <p>
-                 <a href="https://silvermirror.com/" target="_blank">
-                   <img src="https://silvermirror.com/wp-content/uploads/2021/10/SILVERMIRROR_TRANSPARENT_LOGO_V2.png" alt="Silver Mirror" id="logo" style="margin-left: 0px; width:300px;"></a>
-                 </p>
-               </td>
-               <td valign="top" width="50" align="center"></td>
-             </tr>
-             <tr>
-               <td valign="top" width="50" align="center"></td>
-               <td valign="top" align="left">
-                 <p style="font-size:22px;font-weight:bold;margin:10px 0">Hello ${name},<br>&nbsp;</p>
-                 <p style="font-size:16px;font-weight:normal;margin:10px 0 50px 0;">
-                       Use the code below to authenticate:
-                       <br>
-                       <br>
-                       <span style="background:#E6F6EA; padding:15px; display:block; text-align:center; font-weight:bold;font-size: 20px;">${otp} </span>
-                       <br>
-                       Please be aware that this code is temporary and will expire soon.
-                       <br>
-                       <br>
-                       You are receiving this code because a login to your account was attempted on the Booking Portal. 
-                       <br>
-                       <br>
-                       Regards,<br>
-                       The Silvermirror Team 
-                 </p>
-               </td>
-               <td valign="top" width="50" align="center"></td>
-             </tr>
-           </tbody>
-         </table>
+	 <table style="border-collapse:collapse!important" valign="top" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#fff">
+		<tbody>
+			<tr>
+				<td valign="top" align="center">
+					<div style="border:1px solid #d6ebff;border-radius:12px; width:640px;margin:20px 0 10px 0;">
+					<table style="color:#000; font-size:12px; font-family: 'Averta', Arial, Helvetica, sans-serif; line-height: 1.6rem; border-collapse:collapse!important;border-radius:12px;" valign="top" width="640" cellspacing="0" cellpadding="0" border="0" bgcolor="#fdfafa">
+						<tbody>
+							<tr>
+								<td valign="top" width="50" align="center"></td>
+								<td valign="middle" height="150" align="center">
+									<p>
+									<a href="https://booking.silvermirror.com/" target="_blank"><img src="https://booking.silvermirror.com/assets/email-template-logo.png" alt="Silver Mirror" id="logo" style="margin-left: 0px; width:620px;"></a>
+									</p>
+								</td>
+								<td valign="top" width="50" align="center"></td>
+							</tr>
+							<tr>
+								<td valign="top" width="50" align="center"></td>
+								<td valign="top" align="left">
+									<p style="text-align:center;"><img src="https://booking.silvermirror.com/assets/email-template-icon.png" alt="Silver Mirror" style="margin:10px 0px; width:87px;"></p>
+									<p style="font-size:22px;font-weight:600;margin:10px 0 20px 0;text-align:center;">Hello ${name},</p>
+									<p style="font-size:14px;font-weight:normal;margin:0px 50px 15px 50px;padding-bottom:25px;text-align:center; border-bottom:1px solid #e4e2e2;">
+												<span style="margin:0 0 15px 0;display: block;">Use the code below to authenticate:</span>
+												<span style="background:#fcf7f2; padding:15px; display:block; text-align:center; font-family:'Freight Display Pro', 'freight-display-pro', Georgia, serif;font-weight:bold;font-size: 28px; margin-bottom: 20px;" >${otp} 
+												<span style="font-size:12px; font-family: 'Averta', Arial, Helvetica, sans-serif;font-weight:normal;margin:15px 0 0px 0;text-align:center; display:block;"><b>Please be aware that this code is temporary and will expire soon.</b></span>
+												</span>
+												You are receiving this code because a login to your account was attempted on the <a style="border-bottom:3px solid #80c0f4;color:#000;font-weight:600; text-decoration:none;" href="https://booking.silvermirror.com/" target="_blank">Booking Portal</a>. 		
+									</p>
+									<p style="font-size:14px;font-weight:normal;margin:10px 50px 20px 50px;text-align:center;">
+										Regards,<br>
+										<b>The Silvermirror Team </b>
+									</p>
+								</td>
+								<td valign="top" width="10" align="center"></td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+					<p style="font-size:12px;font-weight:normal;margin:0 10px 20px 10px;text-align:right;width: 640px;color:#767879; font-family: 'Averta', Arial, Helvetica, sans-serif;">
+						© 2023 Silver Mirror Facial
+					</p>
+				</td>		
+			</tr>
+		</tbody>
+	</table>
 
-       </td>		
-     </tr>
-   </tbody>
- </table>
-
-</body>
+ </body>
 </html>`
   // let testAccount = await nodemailer.createTestAccount();
 
