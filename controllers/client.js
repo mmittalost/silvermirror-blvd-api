@@ -87,7 +87,7 @@ sendEmail = async function (email, otp, name) {
 							<tr>
 								<td valign="top" width="50" align="center"></td>
 								<td valign="middle" height="150" align="center">
-									<p>
+									<p style="text-align:center; margin:10px 0;">
 									<a href="https://booking.silvermirror.com/" target="_blank"><img src="https://booking.silvermirror.com/assets/email-template-logo.png" alt="Silver Mirror" id="logo" style="margin-left: 0px; width:620px;"></a>
 									</p>
 								</td>
