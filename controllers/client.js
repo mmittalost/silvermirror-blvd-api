@@ -127,19 +127,36 @@ sendEmail = async function (email, otp, name) {
 </html>`
   // let testAccount = await nodemailer.createTestAccount();
 
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "mail.opensourcetechnologies.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+  // const testConfig = {
+  //   host: "mail.opensourcetechnologies.com",
+  //   port: 587,
+  //   secure: false, // true for 465, false for other ports
+  //   auth: {
+  //     user: "testing@opensourcetechnologies.com", // generated ethereal user
+  //     pass: "kckvWL(h3YLk", // old password "fTEaTpjZXkmf", // generated ethereal password
+  //   },
+  //     tls: {
+  //         rejectUnauthorized: false
+  //     }
+  // }
+
+  const config = {
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
-      user: "testing@opensourcetechnologies.com", // generated ethereal user
-      pass: "kckvWL(h3YLk", // old password "fTEaTpjZXkmf", // generated ethereal password
+      type: "OAuth2",
+      user: "info@silvermirror.com",
+      clientId: "294841675401-mmolut4vkffkd45i4hv8apklu1429so4.apps.googleusercontent.com",
+      clientSecret: "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",
+      refreshToken: "1//04JaViTKgaKkCCgYIARAAGAQSNwF-L9Ir7UkARi7CzmN7HjxXtj-2GJGpeRSJmCcR1t0MP6a5MHGxgfcVp3CHVifAZviApMvOuV8",
+      accessToken: "ya29.a0AVvZVsqSfELIXk8hLfQLH9NrT-an5jxyhihySs5fk45-TrfFvRRUvgdlQcDll-nr_Dn2oeLrzbXlC1QRGgzz8JhBYjMO_XU_LzT6XXp7Ccl1HjgSN1Iv1eclSvLMM4lcB4rtF8a59_96ksMj3fHFKSpnHL0-aCgYKAWMSARESFQGbdwaIUqKgnSjSlxckoJ5HCGNntA0163",
+      expires: 3599,
     },
-      tls: {
-          rejectUnauthorized: false
-      }
-  });
+  }
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport(config);
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
