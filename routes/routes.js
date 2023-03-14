@@ -17,6 +17,7 @@ router.post('/rechedule_appointment', AdminCtrl.rescheduleAppointment);
 router.post('/appointment_reschedule_available_dates', AdminCtrl.appointmentRescheduleAvailableDates);
 router.post('/appointment_reschedule_available_times', AdminCtrl.appointmentRescheduleAvailableTimes);
 // router.post('/update_client', AdminCtrl.updateClient);
+router.post('/get_business_carts', AdminCtrl.getBusinessCarts);
 
 // Client
 router.post('/login', ClientCtrl.login);

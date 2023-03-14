@@ -106,8 +106,8 @@ sendEmail = async function (email, otp, name) {
 												You are receiving this code because a login to your account was attempted on the <a style="border-bottom:3px solid #80c0f4;color:#000;font-weight:600; text-decoration:none;" href="https://booking.silvermirror.com/" target="_blank">Booking Portal</a>. 		
 									</p>
 									<p style="font-size:14px;font-weight:normal;margin:10px 50px 20px 50px;text-align:center;">
-										Regards,<br>
-										<b>The Silvermirror Team </b>
+                    With gratitude,<br>
+										<b>The Silver Mirror Team </b>
 									</p>
 								</td>
 								<td valign="top" width="10" align="center"></td>

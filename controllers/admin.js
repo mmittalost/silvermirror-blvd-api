@@ -364,3 +364,91 @@ addMemberToMailchimpList = async(email)=>{
         status: "subscribed",
     });
 }
+
+exports.getBusinessCarts = async function (req, res) {
+
+    const clientEmail = req.body.clientEmail;
+
+    const gql = {
+      query:`{
+        carts(first:1000 query:"insertedAt>'2022-03-10T18:00:00Z' AND insertedAt<'2023-03-10T18:00:00Z'"){
+            edges{
+                node{
+                    appointments{
+                        client{
+                            id
+                            name
+                        }
+                        appointmentServiceOptions{
+                            appointmentServiceId
+                            durationDelta
+                            finishDurationDelta
+                            id
+                            postClientDurationDelta
+                            postStaffDurationDelta
+                            priceDelta
+                            serviceOptionId
+                        }
+                        appointmentServices{
+                            id
+                            service{
+                                id
+                                name
+                            }
+                            staff{
+                                active
+                                displayName
+                                email
+                                id
+                            }
+                        }
+                        bookedByType
+                        cancelled
+                        clientId
+                        createdAt
+                        duration
+                        endAt
+                        id
+                        locationId
+                        orderId
+                        pendingFormCount
+                        startAt
+                        state
+                    }
+                    clientInformation{
+                        email
+                        externalId
+                        firstName
+                        lastName
+                        phoneNumber
+                    }
+                    completedAt
+                    id
+                    location{
+                        id
+                        address{
+                            city
+                            country
+                            line1
+                            line2
+                            province
+                            state
+                            zip
+                        }
+                        name
+                    }
+                }
+            }
+        }
+      }`
+    }
+    const response = await fetchRequest(gql);
+
+    const filteredResponse = response.data.carts.edges.filter((edge) => {
+        if(edge.node.clientInformation){
+          return edge.node.clientInformation.email == clientEmail && edge.node.appointments.length && !edge.node.appointments[0].cancelled;
+      }
+    })
+  
+    res.json({originalResponse : response, filterResponse: filteredResponse});
+  };
