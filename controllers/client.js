@@ -162,7 +162,7 @@ sendEmail = async function (email, otp, name) {
   let info = await transporter.sendMail({
     from: '"Silver Mirror" <admin@silvermirror.com>', // sender address
     to: email, // list of receivers
-    subject: "Silvermirror login OTP", // Subject line
+    subject: "Silver Mirror - One Time Password", // Subject line
   //   text: "Hello world?", // plain text body
     html: emailTemplate, // html body
   }).catch(err=>{
